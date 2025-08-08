@@ -11,6 +11,7 @@ const Navbar = () => {
           Commerce
         </Link>
         <div className="flex items-center space-x-4">
+          <Link href="/counter">Counter</Link>
           <Link href="/checkout">Checkout</Link>
           <Button size="icon" variant="outline" className="relative">
             <ShoppingCart className="relative z-10" />
