@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import StoreProvider from "@/app/StoreProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
           <Navbar />
           <main>{children}</main>
         </StoreProvider>
+        <Toaster />
       </body>
     </html>
   );

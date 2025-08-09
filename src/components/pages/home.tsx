@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <div className="mt-20 mb-20 space-y-20">
       <h1 className="text-center text-4xl font-bold">Our Products</h1>
-      <div className="container mx-auto grid grid-cols-4 gap-6 px-4">
+      <div className="container mx-auto grid grid-cols-1 gap-6 px-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {products.map((product, index) => (
           <Products key={index} product={product} />
         ))}

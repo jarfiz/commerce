@@ -1,5 +1,16 @@
 "use client";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,8 +24,10 @@ import {
   selectTotalQuantity,
 } from "@/lib/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hookss";
+import { Trash } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const Checkout = () => {
   const router = useRouter();
@@ -25,22 +38,29 @@ const Checkout = () => {
 
   const dispatch = useAppDispatch();
 
+  const handleRemoveAllProduct = () => {
+    dispatch(removeAllProduct());
+    toast.success("All product deleted successfully");
+  };
+
   return (
     <div className="container mx-auto mt-10 px-4">
       <h1 className="text-2xl font-medium">Your cart</h1>
-      <div className="mt-10 grid grid-cols-[1fr_440px] gap-12">
+      <div className="mt-10 grid gap-12 sm:grid-cols-1 md:grid-cols-[1fr_440px]">
         <div className="flex flex-col space-y-2 p-4">
           {/*  */}
           {cart.map((item, index) => (
-            <div key={index} className="flex outline">
+            <div key={index} className="flex p-4 outline">
               <Image src={item.thumbnail} alt="images" width={80} height={80} />
-              <div className="flex flex-1 items-center justify-between px-6">
+              <div className="flex flex-1 flex-col space-y-4 px-6 md:flex-row md:items-center md:justify-between">
                 <div>
                   <h1>{item.title}</h1>
-                  <p className="text-xl font-medium">${item.price}</p>
+                  <p className="font-medium md:text-base lg:text-xl">
+                    ${item.price}
+                  </p>
                 </div>
                 <div className="flex items-center space-x-4">
-                  <div className="space-x-2">
+                  <div className="flex items-center space-x-2">
                     <Button
                       size="sm"
                       variant="outline"
@@ -59,9 +79,14 @@ const Checkout = () => {
                   </div>
                   <Button
                     size="sm"
-                    onClick={() => dispatch(removeSingleProduct(item.id))}
+                    variant="outline"
+                    className="text-red-500"
+                    onClick={() => {
+                      dispatch(removeSingleProduct(item.id));
+                      toast.success("Product deleted");
+                    }}
                   >
-                    Remove
+                    <Trash />
                   </Button>
                 </div>
               </div>
@@ -85,9 +110,28 @@ const Checkout = () => {
                   <span>${totalPrice.toFixed(2)}</span>
                 </div>
               </div>
-              <Button onClick={() => dispatch(removeAllProduct())}>
-                Remove All Product
-              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline">Remove All Product</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      all products from your cart.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleRemoveAllProduct}>
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           )}
         </div>
