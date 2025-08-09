@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { selectCart } from "@/lib/features/cart/cartSlice";
+import { selectCart, selectTotalQuantity } from "@/lib/features/cart/cartSlice";
 import { useAppSelector } from "@/lib/hookss";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
@@ -9,8 +9,7 @@ import React from "react";
 
 const Navbar = () => {
   const cart = useAppSelector(selectCart);
-  const quantity = cart.map((item) => item.quantity);
-  const total = quantity.reduce((acc, val) => acc + val, 0);
+  const quantity = useAppSelector(selectTotalQuantity);
 
   return (
     <header className="sticky top-0 bg-white shadow-md">
@@ -26,7 +25,7 @@ const Navbar = () => {
 
             {cart.length === 0 ? null : (
               <span className="absolute -top-1 -right-2 flex size-4.5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-                {total}
+                {quantity}
               </span>
             )}
           </Button>

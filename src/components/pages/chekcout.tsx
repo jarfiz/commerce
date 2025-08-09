@@ -3,14 +3,16 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { selectCart } from "@/lib/features/cart/cartSlice";
+import { selectCart, selectTotalQuantity } from "@/lib/features/cart/cartSlice";
 import { useAppSelector } from "@/lib/hookss";
 import Image from "next/image";
 
 const Checkout = () => {
   const cart = useAppSelector(selectCart);
+  const total = useAppSelector(selectTotalQuantity);
 
   console.log(cart);
+  console.log(total);
 
   return (
     <div className="container mx-auto mt-10 px-4">
@@ -18,8 +20,8 @@ const Checkout = () => {
       <div className="mt-10 grid grid-cols-[1fr_440px] gap-12">
         <div className="flex flex-col space-y-2 p-4">
           {/*  */}
-          {cart.map((item) => (
-            <div key={item.id} className="flex outline">
+          {cart.map((item, index) => (
+            <div key={index} className="flex outline">
               <Image src={item.thumbnail} alt="images" width={80} height={80} />
               <div className="flex flex-1 items-center justify-between px-6">
                 <div>
@@ -48,7 +50,7 @@ const Checkout = () => {
         </div>
 
         {/* form */}
-        <div className="space-y-4 px-10 py-5 outline">
+        <div className="space-y-4 px-10 py-5 outline h-fit">
           <div className="space-y-1.5">
             <Label htmlFor="first-name text-sm">First Name</Label>
             <Input placeholder="First Name" />

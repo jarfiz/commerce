@@ -7,6 +7,7 @@ interface CartState {
   cart: Cart[];
   status: "pending" | "fulfilled" | "rejected";
   error: boolean | string;
+  total: number;
 }
 
 const initialState: CartState = {
@@ -14,6 +15,7 @@ const initialState: CartState = {
   cart: [],
   status: "fulfilled",
   error: false,
+  total: 0,
 };
 
 export const fetchProducts = createAsyncThunk("fetch/products", async () => {
@@ -28,6 +30,8 @@ export const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const exits = state.cart.find((item) => item.id === action.payload.id);
+      state.total = state.cart.reduce((acc, val) => acc + val.quantity, 1);
+
       if (exits) {
         exits.quantity += 1;
       } else {
@@ -56,5 +60,6 @@ export const { addToCart } = cartSlice.actions;
 // selector
 export const selectProducts = (state: RootState) => state.cart.products;
 export const selectCart = (state: RootState) => state.cart.cart;
+export const selectTotalQuantity = (state: RootState) => state.cart.total;
 
 export default cartSlice.reducer;
