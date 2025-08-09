@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  removeAllProduct,
   selectCart,
   selectTotalPrice,
   selectTotalQuantity,
 } from "@/lib/features/cart/cartSlice";
-import { useAppSelector } from "@/lib/hookss";
+import { useAppDispatch, useAppSelector } from "@/lib/hookss";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -18,6 +19,8 @@ const Checkout = () => {
   const cart = useAppSelector(selectCart);
   const totalQuantity = useAppSelector(selectTotalQuantity);
   const totalPrice = useAppSelector(selectTotalPrice);
+
+  const dispatch = useAppDispatch();
 
   return (
     <div className="container mx-auto mt-10 px-4">
@@ -66,7 +69,9 @@ const Checkout = () => {
                   <span>${totalPrice}</span>
                 </div>
               </div>
-              <Button>Remove All Product</Button>
+              <Button onClick={() => dispatch(removeAllProduct())}>
+                Remove All Product
+              </Button>
             </div>
           )}
         </div>

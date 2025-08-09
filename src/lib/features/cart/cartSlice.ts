@@ -51,6 +51,11 @@ export const cartSlice = createSlice({
         0,
       );
     },
+    removeAllProduct: (state) => {
+      state.totalQuantity = 0;
+      state.cart = [];
+      state.totalPrice = 0;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -68,7 +73,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeAllProduct } = cartSlice.actions;
 
 // selector
 export const selectProducts = (state: RootState) => state.cart.products;
