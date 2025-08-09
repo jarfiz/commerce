@@ -82,7 +82,7 @@ const Checkout = () => {
 
                 <div className="flex w-full items-center justify-between">
                   <Label className="text-lg">Total Price: </Label>
-                  <span>${totalPrice}</span>
+                  <span>${totalPrice.toFixed(2)}</span>
                 </div>
               </div>
               <Button onClick={() => dispatch(removeAllProduct())}>
