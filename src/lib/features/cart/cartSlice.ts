@@ -26,8 +26,13 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state) => {
-      //
+    addToCart: (state, action) => {
+      const exits = state.cart.find((item) => item.id === action.payload.id);
+      if (exits) {
+        exits.quantity += 1;
+      } else {
+        state.cart.push({ ...action.payload, quantity: 1 });
+      }
     },
   },
   extraReducers: (builder) => {
@@ -46,9 +51,10 @@ export const cartSlice = createSlice({
   },
 });
 
-export const {} = cartSlice.actions;
+export const { addToCart } = cartSlice.actions;
 
 // selector
 export const selectProducts = (state: RootState) => state.cart.products;
+export const selectCart = (state: RootState) => state.cart.cart;
 
 export default cartSlice.reducer;
