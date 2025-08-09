@@ -8,7 +8,6 @@ import { useEffect } from "react";
 const Home = () => {
   const products = useAppSelector(selectProducts);
   const dispatch = useAppDispatch();
-  console.log(products);
 
   useEffect(() => {
     dispatch(fetchProducts());
