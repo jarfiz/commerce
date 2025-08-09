@@ -3,16 +3,21 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { selectCart, selectTotalQuantity } from "@/lib/features/cart/cartSlice";
+import {
+  selectCart,
+  selectTotalPrice,
+  selectTotalQuantity,
+} from "@/lib/features/cart/cartSlice";
 import { useAppSelector } from "@/lib/hookss";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Checkout = () => {
-  const cart = useAppSelector(selectCart);
-  const total = useAppSelector(selectTotalQuantity);
+  const router = useRouter();
 
-  console.log(cart);
-  console.log(total);
+  const cart = useAppSelector(selectCart);
+  const totalQuantity = useAppSelector(selectTotalQuantity);
+  const totalPrice = useAppSelector(selectTotalPrice);
 
   return (
     <div className="container mx-auto mt-10 px-4">
@@ -43,14 +48,31 @@ const Checkout = () => {
               </div>
             </div>
           ))}
-          <div className="mt-6 flex items-center justify-between">
-            <p>Total</p>
-            <Button>Remove All Product</Button>
-          </div>
+          {totalQuantity === 0 ? (
+            <div className="mt-20 grid place-items-center space-y-4">
+              <h1>Your cart is empty. Please add items to proceed.</h1>
+              <Button onClick={() => router.push("/")}>Add Product</Button>
+            </div>
+          ) : (
+            <div className="mt-6 flex items-center justify-between">
+              <div className="w-1/4">
+                <div className="flex w-full items-center justify-between">
+                  <Label className="text-lg">Total Quantity: </Label>
+                  <span>{totalQuantity}</span>
+                </div>
+
+                <div className="flex w-full items-center justify-between">
+                  <Label className="text-lg">Total Price: </Label>
+                  <span>${totalPrice}</span>
+                </div>
+              </div>
+              <Button>Remove All Product</Button>
+            </div>
+          )}
         </div>
 
         {/* form */}
-        <div className="space-y-4 px-10 py-5 outline h-fit">
+        <div className="h-fit space-y-4 px-10 py-5 outline">
           <div className="space-y-1.5">
             <Label htmlFor="first-name text-sm">First Name</Label>
             <Input placeholder="First Name" />

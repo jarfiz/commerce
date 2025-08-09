@@ -7,7 +7,8 @@ interface CartState {
   cart: Cart[];
   status: "pending" | "fulfilled" | "rejected";
   error: boolean | string;
-  total: number;
+  totalQuantity: number;
+  totalPrice: number;
 }
 
 const initialState: CartState = {
@@ -15,11 +16,14 @@ const initialState: CartState = {
   cart: [],
   status: "fulfilled",
   error: false,
-  total: 0,
+  totalQuantity: 0,
+  totalPrice: 0,
 };
 
 export const fetchProducts = createAsyncThunk("fetch/products", async () => {
-  const res = await fetch("https://dummyjson.com/products");
+  const res = await fetch("https://dummyjson.com/products", {
+    cache: "reload",
+  });
   const data = await res.json();
   return data.products;
 });
@@ -30,13 +34,22 @@ export const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const exits = state.cart.find((item) => item.id === action.payload.id);
-      state.total = state.cart.reduce((acc, val) => acc + val.quantity, 1);
 
       if (exits) {
         exits.quantity += 1;
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
       }
+
+      state.totalQuantity = state.cart.reduce(
+        (acc, val) => acc + val.quantity,
+        0,
+      );
+
+      state.totalPrice = state.cart.reduce(
+        (acc, curr) => acc + curr.price * curr.quantity,
+        0,
+      );
     },
   },
   extraReducers: (builder) => {
@@ -60,6 +73,8 @@ export const { addToCart } = cartSlice.actions;
 // selector
 export const selectProducts = (state: RootState) => state.cart.products;
 export const selectCart = (state: RootState) => state.cart.cart;
-export const selectTotalQuantity = (state: RootState) => state.cart.total;
+export const selectTotalQuantity = (state: RootState) =>
+  state.cart.totalQuantity;
+export const selectTotalPrice = (state: RootState) => state.cart.totalPrice;
 
 export default cartSlice.reducer;
