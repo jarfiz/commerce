@@ -4,7 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  decreaseQuantity,
+  increaseQuantity,
   removeAllProduct,
+  removeSingleProduct,
   selectCart,
   selectTotalPrice,
   selectTotalQuantity,
@@ -38,15 +41,28 @@ const Checkout = () => {
                 </div>
                 <div className="flex items-center space-x-4">
                   <div className="space-x-2">
-                    <Button size="sm" variant="outline">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => dispatch(increaseQuantity(item.id))}
+                    >
                       +
                     </Button>
                     <span>{item.quantity}</span>
-                    <Button size="sm" variant="outline">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => dispatch(decreaseQuantity(item.id))}
+                    >
                       -
                     </Button>
                   </div>
-                  <Button size="sm">Remove</Button>
+                  <Button
+                    size="sm"
+                    onClick={() => dispatch(removeSingleProduct(item.id))}
+                  >
+                    Remove
+                  </Button>
                 </div>
               </div>
             </div>
