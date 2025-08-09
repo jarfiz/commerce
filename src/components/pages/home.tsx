@@ -1,8 +1,18 @@
-import { getProducts } from "@/actions/products";
-import Products from "@/components/products";
+"use client";
 
-const Home = async () => {
-  const products = await getProducts();
+import Products from "@/components/products";
+import { fetchProducts, selectProducts } from "@/lib/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hookss";
+import { useEffect } from "react";
+
+const Home = () => {
+  const products = useAppSelector(selectProducts);
+  const dispatch = useAppDispatch();
+  console.log(products);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   return (
     <div className="mt-20 mb-20 space-y-20">
