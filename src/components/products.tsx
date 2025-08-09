@@ -1,9 +1,15 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { addToCart } from "@/lib/features/cart/cartSlice";
+import { useAppDispatch } from "@/lib/hookss";
 import { Product } from "@/types/product";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 
 const Products = ({ product }: { product: Product }) => {
+  const dispatch = useAppDispatch();
+
   return (
     <div
       key={product.id}
@@ -23,7 +29,10 @@ const Products = ({ product }: { product: Product }) => {
           </h1>
           <p className="font-bold text-green-500">$ {product.price}</p>
         </div>
-        <Button className="flex items-center">
+        <Button
+          className="flex items-center"
+          onClick={() => dispatch(addToCart(product))}
+        >
           <ShoppingCart size={24} />
           Add To Cart
         </Button>
