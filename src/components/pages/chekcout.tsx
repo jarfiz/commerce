@@ -1,5 +1,5 @@
-import CheckoutForm from "@/components/checkout-form";
-import ProductList from "@/components/product-list";
+import CheckoutForm from "@/components/products/checkout-form";
+import ProductList from "@/components/products/product-list";
 
 const Checkout = () => {
   return (

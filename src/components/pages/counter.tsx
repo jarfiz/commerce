@@ -9,7 +9,7 @@ import {
   reset,
   selectCounter,
 } from "@/lib/features/counter/counterSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/hookss";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 const Counter = () => {
   const counter = useAppSelector(selectCounter);

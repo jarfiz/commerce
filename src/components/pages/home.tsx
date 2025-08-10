@@ -1,8 +1,8 @@
 "use client";
 
-import Products from "@/components/products";
+import Products from "@/components/products/products";
 import { fetchProducts, selectProducts } from "@/lib/features/cart/cartSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/hookss";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useEffect } from "react";
 
 const Home = () => {
