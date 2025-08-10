@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { selectCart, selectTotalQuantity } from "@/lib/features/cart/cartSlice";
-import { useAppSelector } from "@/lib/hookss";
+import { useAppSelector } from "@/lib/hooks";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import React from "react";

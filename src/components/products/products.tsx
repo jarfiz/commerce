@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/lib/features/cart/cartSlice";
-import { useAppDispatch } from "@/lib/hookss";
+import { useAppDispatch } from "@/lib/hooks";
 import { Product } from "@/types/product";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
