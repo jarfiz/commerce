@@ -95,7 +95,10 @@ const CheckoutForm = () => {
         if (!window.snap) {
           const script = document.createElement("script");
           script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
-          script.setAttribute("data-client-key", process.env.CLIENT_KEY || "");
+          script.setAttribute(
+            "data-client-key",
+            process.env.NEXT_PUBLIC_CLIENT_KEY || "",
+          );
           document.head.appendChild(script);
 
           script.onload = () => {
