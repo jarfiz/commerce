@@ -17,6 +17,34 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppSelector } from "@/lib/hooks";
 import { selectTotalPrice } from "@/lib/features/cart/cartSlice";
 import usdToIdr from "@/lib/moneyConverter";
+import { useRouter } from "next/navigation";
+
+// this is get in after the payment is done / completed
+interface MidtransResult {
+  status_code: string;
+  status_message: string;
+  transaction_id: string;
+  order_id: string;
+  gross_amount: string;
+  payment_type: string;
+  transaction_time: string;
+  transaction_status: string;
+}
+declare global {
+  interface Window {
+    snap: {
+      pay: (
+        token: string,
+        options?: {
+          onSuccess?: (res: MidtransResult) => void;
+          onPending?: (res: MidtransResult) => void;
+          onError?: (res: MidtransResult) => void;
+          onClose?: (res: MidtransResult) => void;
+        },
+      ) => void;
+    };
+  }
+}
 
 // schema
 const formSchema = z.object({
@@ -31,6 +59,8 @@ const formSchema = z.object({
 });
 
 const CheckoutForm = () => {
+  const router = useRouter();
+
   const totalPrice = useAppSelector(selectTotalPrice);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,7 +85,52 @@ const CheckoutForm = () => {
       });
 
       const data = await response.json();
+
       console.log(data);
+      console.log(data.success);
+      console.log(data.transaction_token);
+      console.log(data.redirect_url);
+
+      if (data.success && data.transaction_token) {
+        if (!window.snap) {
+          const script = document.createElement("script");
+          script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
+          script.setAttribute("data-client-key", process.env.CLIENT_KEY || "");
+          document.head.appendChild(script);
+
+          script.onload = () => {
+            window.snap.pay(data.transaction_token, {
+              onSuccess: () => {
+                router.push("/payment/success");
+              },
+              onPending: () => {
+                router.push("/payment/pending");
+              },
+              onError: () => {
+                router.push("/payment/fail");
+              },
+              onClose: () => {
+                console.log("Pop up closed");
+              },
+            });
+          };
+        }
+      } else {
+        window.snap.pay(data.transaction_token, {
+          onSuccess: () => {
+            router.push("/payment/success");
+          },
+          onPending: () => {
+            router.push("/payment/pending");
+          },
+          onError: () => {
+            router.push("/payment/fail");
+          },
+          onClose: () => {
+            console.log("Pop up closed");
+          },
+        });
+      }
     } catch (error) {
       console.log(error);
     }
