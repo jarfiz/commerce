@@ -22,6 +22,7 @@ import {
   selectTotalQuantity,
 } from "@/lib/features/cart/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import usdToIdr from "@/lib/moneyConverter";
 import { Trash } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -101,6 +102,10 @@ const ProductList = () => {
             <div className="flex w-full items-center justify-between">
               <Label className="text-lg">Total Price: </Label>
               <span>${totalPrice.toFixed(2)}</span>
+            </div>
+            <div className="flex w-full items-center justify-between">
+              <Label className="text-lg">Total Price(IDR): </Label>
+              <span>Rp. {usdToIdr(totalPrice)}</span>
             </div>
           </div>
           <AlertDialog>
