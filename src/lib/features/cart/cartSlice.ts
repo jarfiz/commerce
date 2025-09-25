@@ -1,6 +1,6 @@
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/lib/store";
 import { Cart, Product } from "@/types/product";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface CartState {
   products: Product[];

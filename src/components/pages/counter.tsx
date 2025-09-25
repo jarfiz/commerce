@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   dec,
   decByVal,
@@ -10,6 +9,7 @@ import {
   selectCounter,
 } from "@/lib/features/counter/counterSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { Button } from "@/components/ui/button";
 
 const Counter = () => {
   const counter = useAppSelector(selectCounter);

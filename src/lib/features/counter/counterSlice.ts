@@ -1,5 +1,5 @@
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/lib/store";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
   counter: 0,

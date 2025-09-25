@@ -1,19 +1,19 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { LogOut, ShoppingCart } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 import { selectCart, selectTotalQuantity } from "@/lib/features/cart/cartSlice";
+import { useAppSelector } from "@/lib/hooks";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import { useAppSelector } from "@/lib/hooks";
-import { LogOut, ShoppingCart } from "lucide-react";
-import Link from "next/link";
-import React from "react";
-import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const router = useRouter();

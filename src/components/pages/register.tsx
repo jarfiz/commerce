@@ -1,9 +1,14 @@
 "use client";
-import { toast } from "sonner";
+
 import type { MouseEvent } from "react";
-import { useForm } from "react-hook-form";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
+import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,10 +19,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
-import { authClient } from "@/lib/auth-client";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z
