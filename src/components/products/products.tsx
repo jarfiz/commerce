@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { ShoppingCart } from "lucide-react";
 import { addToCart } from "@/lib/features/cart/cartSlice";
 import { useAppDispatch } from "@/lib/hooks";
 import { Product } from "@/types/product";
-import { ShoppingCart } from "lucide-react";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 const Products = ({ product }: { product: Product }) => {
   const dispatch = useAppDispatch();

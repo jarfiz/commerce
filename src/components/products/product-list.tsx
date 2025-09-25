@@ -1,4 +1,20 @@
 "use client";
+
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Trash } from "lucide-react";
+import { toast } from "sonner";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeAllProduct,
+  removeSingleProduct,
+  selectCart,
+  selectTotalPrice,
+  selectTotalQuantity,
+} from "@/lib/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import usdToIdr from "@/lib/moneyConverter";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,21 +28,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {
-  decreaseQuantity,
-  increaseQuantity,
-  removeAllProduct,
-  removeSingleProduct,
-  selectCart,
-  selectTotalPrice,
-  selectTotalQuantity,
-} from "@/lib/features/cart/cartSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import usdToIdr from "@/lib/moneyConverter";
-import { Trash } from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 
 const ProductList = () => {
   const router = useRouter();
