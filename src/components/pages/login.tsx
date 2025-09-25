@@ -20,9 +20,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  name: z
-    .string({ error: "Please enter your name." })
-    .min(2, "Name must be at least 2 characters."),
   email: z.email({
     pattern: z.regexes.rfc5322Email,
     error: "Please enter a valid email address.",
@@ -38,7 +35,6 @@ const Register = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -46,16 +42,15 @@ const Register = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await authClient.signUp.email(
+      await authClient.signIn.email(
         {
-          name: values.name,
           email: values.email,
           password: values.password,
         },
         {
           onSuccess: (ctx) => {
             router.push("/");
-            toast.success("Account created successfully.");
+            toast.success("Login successfully");
           },
           onError: (ctx) => {
             toast.error(ctx.error.message);
@@ -79,26 +74,12 @@ const Register = () => {
   return (
     <Form {...form}>
       <h1 className="mt-20 text-center text-2xl font-medium">
-        Create an account
+        Login to your account
       </h1>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="mx-auto max-w-3xl space-y-4 py-10"
       >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your full name." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <FormField
           control={form.control}
           name="email"
@@ -120,21 +101,21 @@ const Register = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="Create a strong password." {...field} />
+                <Input placeholder="Enter your password." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <p>
-          Already have an account?{" "}
-          <Link href="/login" className="text-blue-500">
-            Login
+          Don&apos;t have an account?{" "}
+          <Link href="/register" className="text-blue-500">
+            Register
           </Link>
         </p>
         <div className="mt-10 space-y-3">
           <Button type="submit" className="w-full cursor-pointer">
-            Register
+            Login
           </Button>
 
           <div className="flex items-center">
