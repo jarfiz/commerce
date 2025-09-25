@@ -55,10 +55,12 @@ const Register = () => {
         },
         {
           onSuccess: (ctx) => {
+            console.log(ctx);
             router.push("/");
             toast.success("Account created successfully.");
           },
           onError: (ctx) => {
+            console.log(ctx);
             toast.error(ctx.error.message);
           },
         },
