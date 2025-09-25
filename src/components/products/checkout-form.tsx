@@ -93,7 +93,7 @@ const CheckoutForm = () => {
           script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
           script.setAttribute(
             "data-client-key",
-            process.env.NEXT_PUBLIC_CLIENT_KEY || "",
+            process.env.NEXT_MIDTRANS_PUBLIC_CLIENT_KEY || "",
           );
           document.head.appendChild(script);
 
